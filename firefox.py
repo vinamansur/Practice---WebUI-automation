@@ -6,7 +6,7 @@ import time
 
 service = Service(r'C:\selenium_drivers\geckodriver.exe')
 driver = Firefox(service=service)
-# driver.install_addon(r'c:\selenium_drivers\uBlock0@raymondhill.net.xpi', temporary=True)
+driver.install_addon(r'c:\selenium_drivers\uBlock0@raymondhill.net.xpi', temporary=True)
 driver.implicitly_wait(10)
 driver.maximize_window()
 
