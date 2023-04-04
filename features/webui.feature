@@ -6,7 +6,6 @@ Feature: A registered user wants to shop online
     Given a logged user goes to products page
     When they search for t-shirts
     When two t-shirts are added to cart
-    Then the products are shown on cart
     Then user can remove the ones they didn't like
 
     When user proceeds to checkout

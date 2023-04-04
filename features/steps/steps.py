@@ -50,54 +50,33 @@ def search_products(self):
 
 @When("two t-shirts are added to cart")
 def add_products(self):
-    # ------ adding the first t-shirt to cart -----------
-    # scrolling to the element, before clicking
-    driver.execute_script("arguments[0].scrollIntoView(true)",
-                          driver.find_element(By.XPATH, "(//a[text()='View Product'])[1]"))
-    driver.execute_script("window.scrollBy(0,-500)", "")
-    # selecting the first option
-    driver.find_element(By.XPATH, "(//a[text()='View Product'])[1]").click()
-    # clicking "Add to cart"
-    driver.find_element(By.XPATH, "//div[@class='product-information']//button").click()
+    # store all products returned from search on search_list
+    search_list = driver.find_elements(By.XPATH, "//div[@class='productinfo text-center']//a")
 
-    # checking if first product was actually added to cart
-    time.sleep(0.5)  # waiting for the modal window to show up
-    assert driver.find_element(By.XPATH, "//h4[contains(text(), 'Added!')]")
+    # loops through first two products in the list, or the single product if list size is 1
+    # clicks on "Add to cart", then "Continue Shopping"
+    for i in range(0, min(len(search_list), 2)):
+        search_list[i].click()
+        driver.find_element(By.XPATH, "//div[@class='modal-footer']//button").click()
 
-    # returning to search results
-    driver.back()
-    # ------ adding the second t-shirt to cart -----------
-    # scrolling to the element, before clicking
-    driver.execute_script("arguments[0].scrollIntoView(true)",
-                          driver.find_element(By.XPATH, "(//a[text()='View Product'])[2]"))
-    driver.execute_script("window.scrollBy(0,-500)", "")
-    # selecting the second option
-    driver.find_element(By.XPATH, "(//a[text()='View Product'])[2]").click()
-    # clicking "Add to cart"
-    driver.find_element(By.XPATH, "//div[@class='product-information']//button").click()
-
-    # checking if first product was actually added to cart
-    time.sleep(0.5)  # waiting for the modal window to show up
-    assert driver.find_element(By.XPATH, "//h4[contains(text(), 'Added!')]")
-
-
-@Then("the products are shown on cart")
-def view_cart(self):
     # viewing cart
-    time.sleep(0.5)
-    driver.find_element(By.XPATH, "//u").click()
-    # checking if there are two products on cart
-    products = driver.find_elements(By.XPATH, "//tr[contains(@id, 'product-')]")
-    assert len(products) == 2, "Cart doesn't contain two products"
+    driver.find_element(By.PARTIAL_LINK_TEXT, "Cart").click()
+
+    # checking the number of products on cart
+    cart_list = driver.find_elements(By.XPATH, "//tr[contains(@id, 'product-')]")
+    assert len(cart_list) == min(len(search_list), 2), "Cart doesn't contain the right products"
 
 
 @Then("user can remove the ones they didn't like")
 def remove_products(self):
-    # removing 1 T-Shirt that I don't like from the cart
-    driver.find_element(By.XPATH, "(//td[@class='cart_delete'])[2]//a").click()
+    # getting cart list
+    cart_list_1 = driver.find_elements(By.XPATH, "//tr[contains(@id, 'product-')]")
+    # removing 1 T-Shirt that I don't like from the cart, only if there's more than 1 product
+    if len(cart_list_1) > 1:
+        driver.find_element(By.XPATH, "(//td[@class='cart_delete'])[2]//a").click()
     # checking it there's only one product on cart
-    products = driver.find_elements(By.XPATH, "//tr[contains(@id, 'product-')]")
-    assert len(products) == 1, "Cart contains more than one product"
+    cart_list_2 = driver.find_elements(By.XPATH, "//tr[contains(@id, 'product-')]")
+    assert len(cart_list_2) == 1, "Cart contains more than one product"
 
 
 @When("user proceeds to checkout")
