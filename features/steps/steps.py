@@ -1,7 +1,6 @@
 from selenium.webdriver import Firefox
 from selenium.webdriver.common.by import By
 from selenium.webdriver.firefox.service import Service
-import time
 from behave import Given, When, Then
 
 service = Service(r'C:\selenium_drivers\geckodriver.exe')
@@ -19,14 +18,14 @@ def launch_app(self):
     assert driver.title == "Automation Exercise", "website did not load properly"
 
 
-@Then('a user logs in with "{email}" and "{password}"')
-def sign_in(self, email, password):
+@ Then('a user logs in with valid credentials')
+def sign_in(context):
     # going to login page
     driver.find_element(By.LINK_TEXT, 'Signup / Login').click()
 
     # logging in
-    driver.find_element(By.CSS_SELECTOR, "input[data-qa='login-email']").send_keys(email)
-    driver.find_element(By.CSS_SELECTOR, "input[data-qa='login-password']").send_keys(password)
+    driver.find_element(By.CSS_SELECTOR, "input[data-qa='login-email']").send_keys(context.table[0]['email'])
+    driver.find_element(By.CSS_SELECTOR, "input[data-qa='login-password']").send_keys(context.table[0]['password'])
     driver.find_element(By.CSS_SELECTOR, "button[data-qa='login-button']").click()
     # checking if user is logged in
     assert driver.current_url == "https://www.automationexercise.com/", "Login error"
