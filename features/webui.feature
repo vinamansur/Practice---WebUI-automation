@@ -7,8 +7,8 @@ Feature: A registered user wants to shop online
   Scenario: Successfully buying one t-shirt
     Given a logged user goes to products page
     When they search for "tshirt"
-    And two products are added to cart
-    Then user can remove the ones they didn't like
+    And "2" products are added to cart
+    Then user removes "1" product that they did not like
 
     When user proceeds to checkout
     Then they can review the order
