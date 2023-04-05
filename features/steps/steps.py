@@ -1,7 +1,6 @@
 from selenium.webdriver import Firefox
 from selenium.webdriver.common.by import By
 from selenium.webdriver.firefox.service import Service
-import time
 from behave import Given, When, Then
 
 service = Service(r'C:\selenium_drivers\geckodriver.exe')
@@ -19,14 +18,14 @@ def launch_app(self):
     assert driver.title == "Automation Exercise", "website did not load properly"
 
 
-@Then("a user logs in with valid credentials")
-def sign_in(self):
+@ Then('a user logs in with valid credentials')
+def sign_in(context):
     # going to login page
     driver.find_element(By.LINK_TEXT, 'Signup / Login').click()
 
     # logging in
-    driver.find_element(By.CSS_SELECTOR, "input[data-qa='login-email']").send_keys("vmansur@abc.com")
-    driver.find_element(By.CSS_SELECTOR, "input[data-qa='login-password']").send_keys("123456")
+    driver.find_element(By.CSS_SELECTOR, "input[data-qa='login-email']").send_keys(context.table[0]['email'])
+    driver.find_element(By.CSS_SELECTOR, "input[data-qa='login-password']").send_keys(context.table[0]['password'])
     driver.find_element(By.CSS_SELECTOR, "button[data-qa='login-button']").click()
     # checking if user is logged in
     assert driver.current_url == "https://www.automationexercise.com/", "Login error"
@@ -40,20 +39,20 @@ def goto_products(self):
     assert driver.title == "Automation Exercise - All Products"
 
 
-@When("they search for t-shirts")
-def search_products(self):
-    driver.find_element(By.ID, "search_product").send_keys('tshirt')
+@When('they search for "{product}"')
+def search_products(self, product):
+    driver.find_element(By.ID, "search_product").send_keys(product)
     driver.find_element(By.ID, "submit_search").click()
     # checking if the right page is being shown
     assert driver.find_element(By.XPATH, "//h2[contains(text(), 'Searched Products')]").is_displayed()
 
 
-@When("two t-shirts are added to cart")
+@When("two products are added to cart")
 def add_products(self):
     # store all products returned from search on search_list
     search_list = driver.find_elements(By.XPATH, "//div[@class='productinfo text-center']//a")
 
-    # loops through first two products in the list, or the single product if list size is 1
+    # loops through first two products in the list, unless list contains less than 2 products
     # clicks on "Add to cart", then "Continue Shopping"
     for i in range(0, min(len(search_list), 2)):
         search_list[i].click()
@@ -65,6 +64,9 @@ def add_products(self):
     # checking the number of products on cart
     cart_list = driver.find_elements(By.XPATH, "//tr[contains(@id, 'product-')]")
     assert len(cart_list) == min(len(search_list), 2), "Cart doesn't contain the right products"
+
+    # checking if cart's empty
+    assert len(cart_list) != 0, "Cart is empty!"
 
 
 @Then("user can remove the ones they didn't like")
