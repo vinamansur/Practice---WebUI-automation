@@ -10090,3 +10090,26 @@ JavaScript warning: https://www.automationexercise.com/static/js/jquery.js, line
 1681410375442	Marionette	INFO	Stopped listening on port 62680
 Dynamically enable window occlusion 1
 !!! error running onStopped callback: TypeError: callback is not a function
+1681413017258	geckodriver	INFO	Listening on 127.0.0.1:64051
+1681413020255	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "--remote-debugging-port" "64052" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "C:\\Users\\vmansur\\AppData\\Local\\Temp\\rust_mozprofileATozuM"
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+1681413021265	Marionette	INFO	Marionette enabled
+Dynamically enable window occlusion 0
+1681413021285	Marionette	INFO	Listening on port 64061
+Read port: 64061
+WebDriver BiDi listening on ws://127.0.0.1:64052
+1681413021564	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\vmansur\\AppData\\Local\\Temp\\rust_mozprofileATozuM\\search.json.mozlz4", (void 0)))
+[ERROR glean_core] Error setting metrics feature config: Json(Error("EOF while parsing a value", line: 1, column: 0))
+DevTools listening on ws://127.0.0.1:64052/devtools/browser/bf7c924a-a751-4854-8261-9590d008f24a
+Port.onMessage event fired while context is inactive.
+JavaScript warning: https://www.automationexercise.com/static/js/jquery.js, line 2: Using //@ to indicate sourceMappingURL pragmas is deprecated. Use //# instead
+1681413030219	Marionette	WARN	Ignoring event 'pageshow' because document has an invalid readyState of 'uninitialized'.
+JavaScript warning: https://www.automationexercise.com/static/js/jquery.js, line 2: Using //@ to indicate sourceMappingURL pragmas is deprecated. Use //# instead
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://www.automationexercise.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://www.automationexercise.com."
+JavaScript warning: https://www.automationexercise.com/static/js/jquery.js, line 2: Using //@ to indicate sourceMappingURL pragmas is deprecated. Use //# instead
+JavaScript warning: https://www.automationexercise.com/static/js/jquery.js, line 2: Using //@ to indicate sourceMappingURL pragmas is deprecated. Use //# instead
+1681414067196	Marionette	INFO	Stopped listening on port 64061
+Dynamically enable window occlusion 1
